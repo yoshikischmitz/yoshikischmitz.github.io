@@ -28,7 +28,7 @@ When done, we will be able to add, list, and complete tasks from the command lin
     [2]     [2014-3-28]     Add more features to
     [3]     [2014-3-29]     Update readme file
 
-By implementing these functions, you will learn how persist user inputted data on the file system, display that data in a useful form, and modify that data based on certain rules.
+By implementing these functions, you will learn how to persist user inputted data on the file system, display that data in a useful form, and modify that data based on certain rules.
 
 ## Getting started with CLI
 
@@ -71,6 +71,7 @@ func main() {
     app.Run(os.Args)
 }
 {% endhighlight %}
+
 `cli.NewApp()` returns a pointer to an App struct. The App struct acts as a wrapper for our program's functionality and metadata. There are a number of attributes we can modify as you can see in the source code for package cli [here](https://github.com/codegangsta/cli/blob/f7c1cd9a11e75b5ad458628188f733a325e14ca5/app.go#L10-L34), however we will be using just `Name`, `Usage`, and `Commands` for now.
 
 `app.Commands = []cli.Command {....}` assigns to our app struct an array of type `Command` (original struct definition is [here](https://github.com/codegangsta/cli/blob/f7c1cd9a11e75b5ad458628188f733a325e14ca5/command.go#L9-L23)). A Command is also a struct, the `Name` in this case defines what subcommand will run the anonymous function defined in `Action`, so running:
@@ -87,7 +88,7 @@ Obviously this is not very useful, as the task isn't actually stored anywhere. L
 
 Go ships with an excellent [JSON](http://www.json.org/) library that we will be leveraging to store our task list as a file.
 
-The json package provides us the ability to convert structs into byte slices representing json data. So if we define a Task struct:
+The json package provides us the ability to convert structs into json text data. So if we define a Task struct:
 
 {% highlight go %}
 
@@ -105,7 +106,7 @@ m := Task{Content: "Hello", Complete: true}
 b, error := json.Marshal(m)
 
 {% endhighlight %}
-`b` now holds the JSON text `{"Content":"Hello","Complete":true}`, simple as that!
+`b` is now a byte slice that holds the JSON text `{"Content":"Hello","Complete":true}`, simple as that!
 
 To get started, add our Task struct under the import lines of todo.go so it looks like this:
 
@@ -123,6 +124,7 @@ type Task struct {
 ....
 
 {% endhighlight %}
+
 Now we need to build an instance of Task based off of the user's input. To do this we will modify the Action in our "add" command.
     
 {% highlight go %}
@@ -158,7 +160,7 @@ Now if you add a task it will write the task to the json file in  the same direc
 
 However, as you may have noticed, `ioutil.Write` truncates(deletes) the existing tasks.json file to write the new byte slice. Now technically we could read the contents of the tasks.json, load it into a variable(store the whole file in memory), combine the old contents with the newly added json, and write that to a file. This works fine for a small number of tasks, but what if we had 10 million? We cannot say for sure that a user won't be loading several terabytes of tasks(which would take up a lot of space in memory). So to ensure our code is sane, and is ready for any enterprise/government level task-tracking, we'll add some more lines for appending to the file.
 
-In order to append, we will use `os.OpenFile` passing the `os.O_APPEND` option. As `os.OpenFile` returns an error if the file doesn't already exist, we have to do some error handling to get our desired functionality of both appending to the file if it already exists, and creating it if it doesn't:
+In order to append, we will use `os.OpenFile` passing the `os.O_APPEND` option. As `os.OpenFile` returns an error if the file doesn't already exist, we have to supply the `os.O_CREATE` option as well to create the file if it doesn't exist:
 
 {% highlight go %}
     Action: func(c *cli.Context) {
@@ -178,9 +180,10 @@ In order to append, we will use `os.OpenFile` passing the `os.O_APPEND` option. 
     },
 
 {% endhighlight %}
+
 Now whenever we run `todo add "task"`, our program will append the task to the end of the file.
 
-In the interest of keeping our code organized, let's move this all into it's own funciton.
+In the interest of keeping our code organized, let's move this all into it's own function.
 
 {% highlight go %}
     func AddTask(task Task) {
@@ -203,10 +206,10 @@ We can now call `AddTask(task)`in our Action to append to the tasks file.
 
 #Listing Tasks
 ---
-Now that we can add tasks to our tasks file, it would be somewhat useful if we could also view without opening tasks.json manually.
+Now that we can add tasks to our list, it would be somewhat useful if we could also view that without opening tasks.json manually.
 
 
-We will add a new list command to our app.
+We will add a new command to our code called "list".
 
 {% highlight go %}
     {
@@ -219,9 +222,14 @@ We will add a new list command to our app.
     }
 
 {% endhighlight %}
-To print the tasks we will need to iterate over the tasks existing in tasks.json. Now we can load the whole file into memory as a slice of tasks, as mentioned earlier we could be dealing with a very large file. Therefor it's preferable to load only one line of the file at a time, convert that into a task, and print that task.
 
-To access the contents of the file line-by-line, we can use package bufio(buffered io). This will let us load each line into a buffer without loading the entire file in memory. We will be using a bufio Scanner, which splits a file's contents into text tokens according to a delimiter(by default "\n").
+By specifying `ShortName`, we allow our users to to type "ls" instead of "list".
+
+To print the tasks we will need to iterate over the tasks existing in tasks.json. 
+
+Now, the most straight-forward approach would be to load the whole file into memory as a slice of tasks. But as mentioned earlier, we could be dealing with a very large file. Therefor it's preferable to load only one line of the file at a time, convert that into a task, and print that task.
+
+To access the contents of the file line-by-line, we can use package bufio(buffered io). This will let us load each line into a buffer, without loading the entire file in memory. We will be using a bufio Scanner, which splits a file's contents into text tokens according to a delimiter(by default "\n").
 
 {% highlight go %}
 func ListTasks() {
