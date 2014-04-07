@@ -8,7 +8,7 @@ Interested in the Go programming language? This tutorial will show you how to wr
 
 Our program will work similarly to [todo.txt](http://todotxt.com). 
 
-When using the completed program, it'll work like this:
+When done, we will be able to add, list, and complete tasks from the command line using the command "todo":
 
     $ todo ls
     [1]     [2014-3-27]     Get groceries
@@ -28,7 +28,7 @@ When using the completed program, it'll work like this:
     [2]     [2014-3-28]     Add more features to
     [3]     [2014-3-29]     Update readme file
 
-through implementing these functions, you will learn how persist user inputted data on the file system, display that data in a useful form, and modify that data based on certain rules.
+By implementing these functions, you will learn how persist user inputted data on the file system, display that data in a useful form, and modify that data based on certain rules.
 
 ## Getting started with CLI
 
