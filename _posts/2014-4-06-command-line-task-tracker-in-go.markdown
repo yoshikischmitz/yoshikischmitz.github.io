@@ -431,6 +431,8 @@ func CompleteTask(idx int) {
 }
 {% endhighlight %}
 
-As you can see the loop for reading each line is identical to that in ListTasks() up until `if !t.Complete {`. In the Extras section I will cover how to move this into its own function and use closures to even further reduce code duplication.
+Our work is now complete, we can now add, list, and complete tasks using our command-line task tracker!
 
-Our work is now complete, we can now add, list, and complete tasks using our command-line todo program!
+As you can see, the loop for reading each line in CompleteTask() is identical to that in ListTasks() up until `if !t.Complete {`. In another post I will cover how to move this into its own function and use closures to even further reduce code duplication. Also, you may have noticed that unlike the original demo at the top, we don't have the month/date the task was added to the list yet either! This will be covered in the next post as well(which I promise will be much shorter!)
+
+See you again!
