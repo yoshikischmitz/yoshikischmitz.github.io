@@ -9,6 +9,7 @@ pygments: true
 # so be sure to set them if your theme uses them.
 #
 title : Coding 
+about : I love web development and thought I'd share what I know in the form of tutorials. You'll mostly find those on this site.
 author :
   name : Yoshiki Schmitz 
   email : yoshikischmitz@outlook.com

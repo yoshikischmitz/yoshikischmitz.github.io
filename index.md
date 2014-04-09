@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Daga Kotowaru  
+title: Welcome to My Programming Blog 
 ---
 {% include JB/setup %}
 
