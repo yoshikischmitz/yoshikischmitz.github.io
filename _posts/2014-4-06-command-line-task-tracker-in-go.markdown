@@ -258,10 +258,10 @@ func ListTasks() {
 		// with our json values.
 		err := json.Unmarshal([]byte(j), &t)
 		// By default we'll only print tasks that are not complete
+		if err != nil {
+			panic(err)
+		}
 		if !t.Complete {
-			if err != nil {
-				panic(err)
-			}
 			fmt.Printf("[%d] %s\n", i, t.Content)
 			i++
 		}
@@ -372,7 +372,7 @@ This is what ListTasks() looks like after modifying it to use `OpenTaskFile()`:
 
 Much cleaner.
 
-CompleteTask() will take an integer called idx(for index) from the user. As the flag from `c.Args().Flag()` will be a string, we have to conver it into an int. To do so we will import the strconv package:
+CompleteTask() will take an integer called idx(for index) from the user. As the flag from `c.Args().Flag()` will be a string, we have to convert it into an int. To do so we will import the strconv package:
 
 {% highlight go %}
     import (
