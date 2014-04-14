@@ -30,7 +30,13 @@ When done, we will be able to add, list, and complete tasks from the command lin
 
 By implementing these functions, you will learn how to persist user inputted data on the file system, display that data in a useful form, and modify that data based on certain rules.
 
-## Getting started with CLI
+## Table of Contents
+	1. ###Gettine Started With CLI
+	2. ###Adding Tasks, Persistence With JSON
+	3. ###Listing Tasks
+	4. ###Completing Tasks
+
+## Getting Started With CLI
 
 First get the [cli package by Codegangsta](https://github.com/codegangsta/cli), this will make it simple for us to wrap the application's functionality around a command line interface.
 
@@ -84,7 +90,7 @@ will print:
     
 Obviously this is not very useful, as the task isn't actually stored anywhere. Let's consider now how we can persist tasks.
 
-## Adding Tasks
+## Adding Tasks, Persistence with JSON
 
 Go ships with an excellent [JSON](http://www.json.org/) library that we will be leveraging to store our task list as a file.
 
