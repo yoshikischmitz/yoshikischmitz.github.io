@@ -31,10 +31,10 @@ When done, we will be able to add, list, and complete tasks from the command lin
 By implementing these functions, you will learn how to persist user inputted data on the file system, display that data in a useful form, and modify that data based on certain rules.
 
 ## Table of Contents
-	1. ###Gettine Started With CLI
-	2. ###Adding Tasks, Persistence With JSON
-	3. ###Listing Tasks
-	4. ###Completing Tasks
+	1. ####Gettine Started With CLI
+	2. ####Adding Tasks, Persistence With JSON
+	3. ####Listing Tasks
+	4. ####Completing Tasks
 
 ## Getting Started With CLI
 
