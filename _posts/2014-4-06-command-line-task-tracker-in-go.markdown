@@ -275,7 +275,7 @@ func ListTasks() {
 }
 
 {% endhighlight %}
-As explained in the comments, each time we call scanner.Scan() we are advancing the scanner to the next token. As a for loop with one condition runs until its expression evaluates to true, and Scan returns false when the scan is complete, our loop will continue executing until we hit the end of the file.
+As explained in the comments, each time we call scanner.Scan() we are advancing the scanner to the next token. As a for loop with one condition runs until its expression evaluates to false, and Scan returns false when the scan is complete, our loop will continue executing until we hit the end of the file.
 
 Now we can use `todo ls` to see all of our uncompleted tasks:
 
